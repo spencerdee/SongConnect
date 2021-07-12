@@ -8,22 +8,6 @@
     <p>Date Appears Here</p>
     <button onclick="getElementById('demo').innerHTML = Date()">What is the time?</button>
     
-    function postData(input) {
-      $.ajax({
-          type: "POST",
-          url: "/reverse_pca.py",
-          data: { param: input },
-          success: callbackFunc
-      });
-    }
-
-    function callbackFunc(response) {
-        // do something with the response
-        console.log(response);
-    }
-
-postData('data to process');
-    
     <script>
     function myFunction() {
       document.getElementById("demo").innerHTML = "YOU CLICKED ME!";
