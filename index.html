@@ -5,8 +5,24 @@
     <p>This example demonstrates how to assign an "onclick" event to a p element.</p>
 
     <p id="demo" onclick="myFunction()">Click me.</p>
-
+    <p>Date Appears Here</p>
     <button onclick="getElementById('demo').innerHTML = Date()">What is the time?</button>
+    
+    function postData(input) {
+      $.ajax({
+          type: "POST",
+          url: "/reverse_pca.py",
+          data: { param: input },
+          success: callbackFunc
+      });
+    }
+
+    function callbackFunc(response) {
+        // do something with the response
+        console.log(response);
+    }
+
+postData('data to process');
     
     <script>
     function myFunction() {
