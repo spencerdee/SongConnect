@@ -1,2 +1,2 @@
 # SongConnect
-https://spencerdee.github.io/SongConnect
+https://spencerdee.github.io/SongConnect/
