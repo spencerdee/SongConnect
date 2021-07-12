@@ -6,6 +6,8 @@
 
     <p id="demo" onclick="myFunction()">Click me.</p>
 
+    <button onclick="getElementById('demo').innerHTML = Date()">What is the time?</button>
+    
     <script>
     function myFunction() {
       document.getElementById("demo").innerHTML = "YOU CLICKED ME!";
