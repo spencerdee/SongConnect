@@ -1,20 +1,12 @@
 <!DOCTYPE html>
 <html>
   <body>
-
-    <p>This example demonstrates how to assign an "onclick" event to a p element.</p>
-
-    <p id="demo" onclick="myFunction()">Click me.</p>
-  </body>
-  <body>
-    <p>Date Appears Here</p>
-    <button onclick="getElementById('demo').innerHTML = Date()">What is the time?</button>
-    
-    <script>
-    function myFunction() {
-      document.getElementById("demo").innerHTML = "YOU CLICKED ME!";
-    }
-    </script>
-
+    $.ajax({
+      type: "POST",
+      url: "~/SongConnect.py",
+      data: { param: "Jungle", param: "Bas"}
+    }).done(function( o ) {
+      document.write(o)
+    });
   </body>
 </html>
