@@ -1,3 +1,6 @@
+def test0():
+  return 10
+
 def test(a):
   return a + 1
 
