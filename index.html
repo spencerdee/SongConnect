@@ -2,9 +2,11 @@
 <html>
   <body>
     <p>11</p>
+    <sdtest>Out</sdtest>
     <script>
       document.write("5")
       var text = $("p");
+      var test_out = $("sdtest")
       $.ajax({
         type: "POST",
         url: "SongConnect/test0.py",
@@ -14,6 +16,7 @@
          test_out = test(text);
          document.write("t1")
       });
+      $(sdtest).innerHTML = test_out
       document.write(test_out);
     </script>
   </body>
