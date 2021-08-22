@@ -4,6 +4,7 @@
     <p id="sdin">21</p>
     <p id="sdtest">Out</p>
     <button type="button" onclick="sdfunc()">Add One</button>
+    <button type="button" onclick="pytest()">Test</button>
     <script>
       var text = $("sdin");
       var test_out = $("sdtest");
@@ -11,15 +12,17 @@
         var old = Number(document.getElementById("sdin").innerHTML);
         document.getElementById("sdin").innerHTML = old + 1;
       }
-      $.ajax({
-        type: "POST",
-        url: "SongConnect/test.py",
-        success: AjaxSucceeded,
-        error: AjaxFailed
-      }).done(function( o ) {
-         test_out = test0();
-      });
-      document.getElementById("sdout").innerHTML = test_out;
+      function pytest() {
+        $.ajax({
+          type: "POST",
+          url: "SongConnect/test.py",
+          success: AjaxSucceeded,
+          error: AjaxFailed
+        }).done(function( o ) {
+           test_out = test0();
+        });
+        document.getElementById("sdout").innerHTML = test_out;
+      }
     </script>
   </body>
 </html>
