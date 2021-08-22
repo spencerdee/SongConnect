@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html>
   <body>
-    <p id="sdin">11</p>
+    <p id="sdin">1</p>
     <p id="sdtest">Out</p>
-    <button type="button" onclick="sdfunc()">Try it</button>
+    <button type="button" onclick="sdfunc()">Add One</button>
     <script>
       var text = $("sdin");
-      var test_out = $("sdtest")
+      var test_out = $("sdtest");
       function sdfunc() {
-        let old = document.getElementById("sdin").innerHTML
-        document.getElementById("sdin").innerHTML = old + 1
+        var old = Number(document.getElementById("sdin").innerHTML);
+        document.getElementById("sdin").innerHTML = old + 1;
       }
       $.ajax({
         type: "POST",
@@ -17,9 +17,9 @@
         success: AjaxSucceeded,
         error: AjaxFailed
       }).done(function( o ) {
-         test_out = test(text);
+         test_out = test();
       });
-      $(sdtest).innerHTML = test_out
+      document.getElementById("sdout").innerHTML = test_out;
     </script>
   </body>
 </html>
