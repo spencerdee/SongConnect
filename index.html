@@ -8,7 +8,7 @@
       var text = $("sdin");
       var test_out = $("sdtest")
       function sdfunc() {
-        var old = $("sdin").innerHTML
+        let old = document.getElementById("sdin").innerHTML
         document.getElementById("sdin").innerHTML = old + 1
       }
       $.ajax({
