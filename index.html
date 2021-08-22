@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <body>
-    <p id="sdin">1</p>
+    <p id="sdin">21</p>
     <p id="sdtest">Out</p>
     <button type="button" onclick="sdfunc()">Add One</button>
     <script>
@@ -13,11 +13,11 @@
       }
       $.ajax({
         type: "POST",
-        url: "SongConnect/test0.py",
+        url: "SongConnect/test.py",
         success: AjaxSucceeded,
         error: AjaxFailed
       }).done(function( o ) {
-         test_out = test();
+         test_out = test0();
       });
       document.getElementById("sdout").innerHTML = test_out;
     </script>
