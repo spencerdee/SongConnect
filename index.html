@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html>
   <body>
-    <p>11</p>
-    <sdtest>Out</sdtest>
+    <p id="sdin">11</p>
+    <p id="sdtest">Out</p>
     <script>
       document.write("5")
-      var text = $("p");
+      var text = $("sdin");
       var test_out = $("sdtest")
       $.ajax({
         type: "POST",
