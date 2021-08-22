@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <html>
   <body>
+    <p>11</p>
+    var text = $("p");
     $.ajax({
       type: "POST",
-      url: "~/main.py",
-      data: { param: "Jungle", param: "Bas"}
+      url: "~/test.py",
+      data: {param: text}
     }).done(function( o ) {
-      document.write(o)
+       test_out = test(text);
     });
+    document.write(test_out);
   </body>
 </html>
