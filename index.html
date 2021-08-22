@@ -2,14 +2,16 @@
 <html>
   <body>
     <p>11</p>
-    var text = $("p");
-    $.ajax({
-      type: "POST",
-      url: "~/test.py",
-      data: {param: text}
-    }).done(function( o ) {
-       test_out = test(text);
-    });
-    document.write(test_out);
+    <script>
+      var text = $("p");
+      $.ajax({
+        type: "POST",
+        url: "~/test.py",
+        data: {param: text}
+      }).done(function( o ) {
+         test_out = test(text);
+      });
+      document.write(test_out);
+    </script>
   </body>
 </html>
