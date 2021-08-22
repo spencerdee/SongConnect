@@ -3,10 +3,14 @@
   <body>
     <p id="sdin">11</p>
     <p id="sdtest">Out</p>
+    <button type="button" onclick="sdfunc()">Try it</button>
     <script>
-      document.write("5")
       var text = $("sdin");
       var test_out = $("sdtest")
+      function sdfunc() {
+        var old = $("sdin")
+        $("sdin") = old + 1
+      }
       $.ajax({
         type: "POST",
         url: "SongConnect/test0.py",
@@ -14,10 +18,8 @@
         error: AjaxFailed
       }).done(function( o ) {
          test_out = test(text);
-         document.write("t1")
       });
       $(sdtest).innerHTML = test_out
-      document.write(test_out);
     </script>
   </body>
 </html>
