@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+
+<input type="text" id="input" value="Some text...">
+
+<button onclick="myFunction()">Try it</button>
+<p id="sdtext">Text Appears Here</p>
+  
+<script>
+function myFunction() {
+  document.getElementByID("sdtext").innerHTML = document.getElementById("input").value;
+}
+</script>
+
+</body>
+</html>
