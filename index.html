@@ -4,16 +4,70 @@
 
 <h3>Calculator</h3>
 
-<input type="text" id="input" value="Input Text Here">
+<input type="text" id="input" value="1*1">
 
 <button onclick="myFunction()">Calculate</button>
 
 <p id="sdtext">Answer Appears Here</p>
+<p id="eo">Errorout</p>
 
 <script>
+class Expression {
+  constructor(e1, op, e2) {
+    this.e1 = parseInt(e1);
+    this.op = op;
+    this.e2 = parseInt(e2);
+  }
+  
+  eval () {
+  	//document.getElementById("eo").innerHTML = "eval";
+    switch (this.op) {
+      case "num":
+        return this.e1;
+      case "+":
+        return this.e1 + this.e2;
+        break;
+      case "-":
+        return this.e1 - this.e2;
+      case "*":
+        return this.e1 * this.e2;
+      case "/":
+        return this.e1 / this.e2;
+      default:
+        console.log("Error: " + this.op + " is not a valid operation");
+        document.getElementById("eo").innerHTML = "error op";
+        throw error;
+    }
+  }
+  
+  printOut () {
+  	var o = this.e1.toString() + this.op + this.e2.toString();
+    return o;
+  }
+}
+
+function createExpression (input) {
+  if (!isNaN(input)) {
+    return parseInt(input);
+  } else if (input.includes("*")) {
+    document.getElementById("eo").innerHTML = "* mult";
+    var LoS = input.split("*", 1);
+    document.getElementById("eo").innerHTML = LoS;
+    return new Expression(createExpression(LoS[0]), "*", createExpression(LoS[1]));
+  } else {
+    document.getElementById("eo").innerHTML = "creation error";
+    throw error;
+  }
+}
+  
 function myFunction() {
   var x = document.getElementById("input").value;
-  document.getElementById("sdtext").innerHTML = x;
+  
+  var y = createExpression(x);
+  
+  var z = y.eval().toString();
+  
+  document.getElementById("sdtext").innerHTML = z;
 }
 </script>
 
