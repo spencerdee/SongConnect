@@ -2,21 +2,93 @@
 <html>
 <body>
 
-<h3>Calculator</h3>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body {font-family: Arial;}
 
-<input type="text" id="input" value="1*1">
+/* Style the tab */
+.tab {
+  overflow: hidden;
+  border: 1px solid #ccc;
+  background-color: #f1f1f1;
+}
 
-<button onclick="myFunction()">Calculate</button>
+/* Style the buttons inside the tab */
+.tab button {
+  background-color: inherit;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  transition: 0.3s;
+  font-size: 17px;
+}
 
-<p id="sdtext">Answer Appears Here</p>
-<p id="eo">Errorout</p>
+/* Change background color of buttons on hover */
+.tab button:hover {
+  background-color: #ddd;
+}
+
+/* Create an active/current tablink class */
+.tab button.active {
+  background-color: #ccc;
+}
+
+/* Style the tab content */
+.tabcontent {
+  display: none;
+  padding: 6px 12px;
+  border: 1px solid #ccc;
+  border-top: none;
+}
+</style>
+</head>
+<body>
+
+<h2>Spencer Dee's Project Page</h2>
+<p>Click a Project</p>
+
+<div class="tab">
+  <button class="tablinks" onclick="openTab(event, 'Basic Calculator')">Basic Calculator</button>
+</div>
+
+<div id="Basic Calculator" class="tabcontent">
+  <h3>Basic Calculator</h3>
+
+  <p>This calculator takes a mathematical expression and evaluates it while considering order of operations. Parenthesis are not supported, but addition, subtraction, multiplication, division, and exponents are. 
+    <br> For example, an input of "2^3*4-5" would yield 27.
+    <br> The console can be examined after the calculation in order to see the creation of a binary search tree to evaluate the expression.</p>
+
+  <input type="text" id="input" value="2^3*4-5">
+
+  <button onclick="myFunction()">Calculate</button>
+
+  <p id="answer">Answer:</p>
+  <p id="ooo">Order of Operations:</p>
+</div>
 
 <script>
+function openTab(evt, tabName) {
+  var i, tabcontent, tablinks;
+  tabcontent = document.getElementsByClassName("tabcontent");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+  tablinks = document.getElementsByClassName("tablinks");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" active", "");
+  }
+  document.getElementById(tabName).style.display = "block";
+  evt.currentTarget.className += " active";
+}
+
 class Expression {
   constructor(e1, op, e2) {
-    this.e1 = parseInt(e1);
+    this.e1 = e1;
     this.op = op;
-    this.e2 = parseInt(e2);
+    this.e2 = e2;
   }
   
   eval () {
@@ -25,51 +97,78 @@ class Expression {
       case "num":
         return this.e1;
       case "+":
-        return this.e1 + this.e2;
-        break;
+        return this.e1.eval() + this.e2.eval();
       case "-":
-        return this.e1 - this.e2;
+        return this.e1.eval() - this.e2.eval();
       case "*":
-        return this.e1 * this.e2;
+        return this.e1.eval() * this.e2.eval();
       case "/":
-        return this.e1 / this.e2;
+        return this.e1.eval() / this.e2.eval();
+      case "^":
+        return Math.pow(this.e1.eval(), this.e2.eval());
       default:
         console.log("Error: " + this.op + " is not a valid operation");
-        document.getElementById("eo").innerHTML = "error op";
-        throw error;
+        throw new error;
     }
   }
   
   printOut () {
-  	var o = this.e1.toString() + this.op + this.e2.toString();
-    return o;
+    //console.log("printOut called on exp of type " + this.op);
+    if (this.op == "num") {
+      //console.log("printOut: num is " + this.e1.toString());
+      return this.e1.toString();
+    } else {
+      //console.log("printOut: exp is " + this.e1.printOut() + this.op + this.e2.printOut());
+  	  return "(" + this.e1.printOut() + this.op + this.e2.printOut() + ")";
+    }
   }
+}
+
+function splitOnFirst (str, sep) {
+  const index = str.indexOf(sep);
+  return index < 0 ? [str] : [str.slice(0, index), str.slice(index + sep.length)];
 }
 
 function createExpression (input) {
+  console.log("create expression called with input of " + input);
   if (!isNaN(input)) {
-    return parseInt(input);
+    console.log("num input of <" + input + ">");
+    return new Expression(parseInt(input), "num", parseInt(input));
+  } else if (input.includes("-")) {
+    console.log("found - in input of " + input);
+    var o = "-";
+  } else if (input.includes("+")) {
+    console.log("found + in input of " + input);
+    var o = "+";
+  } else if (input.includes("/")) {
+    console.log("found / in input of " + input);
+    var o = "/";
   } else if (input.includes("*")) {
-    document.getElementById("eo").innerHTML = "* mult";
-    var LoS = input.split("*", 1);
-    document.getElementById("eo").innerHTML = LoS;
-    return new Expression(createExpression(LoS[0]), "*", createExpression(LoS[1]));
+    console.log("found * in input of " + input);
+    var o = "*";
+  } else if (input.includes("^")) {
+    console.log("found ^ in input of " + input);
+    var o = "^";
   } else {
-    document.getElementById("eo").innerHTML = "creation error";
-    throw error;
+    console.log("SDERROR: nothing found in input of " + input);
+    throw new error;
   }
+  var LoS = splitOnFirst(input, o);
+  return new Expression(createExpression(LoS[0]), o, createExpression(LoS[1]));
 }
   
 function myFunction() {
+  console.log("started function");
   var x = document.getElementById("input").value;
-  
+  console.log("retrieved input of " + x);
   var y = createExpression(x);
+  console.log("created Expression of " + y.printOut());
+  var z = y.eval();
+  console.log("answer found is " + z);
   
-  var z = y.eval().toString();
-  
-  document.getElementById("sdtext").innerHTML = z;
+  document.getElementById("answer").innerHTML = "Answer: " + z;
+  document.getElementById("ooo").innerHTML = "Order of Operations: " + y.printOut();
 }
 </script>
-
 </body>
 </html>
