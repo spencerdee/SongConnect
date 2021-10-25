@@ -52,21 +52,26 @@ body {font-family: Arial;}
 
 <div class="tab">
   <button class="tablinks" onclick="openTab(event, 'Basic Calculator')">Basic Calculator</button>
+  <button class="tablinks" onclick="openTab(event, 'Advanced Calculator')">Advanced Calculator</button>
 </div>
 
 <div id="Basic Calculator" class="tabcontent">
   <h3>Basic Calculator</h3>
-
-  <p>This calculator takes a mathematical expression and evaluates it while considering order of operations. Parenthesis are not supported, but addition, subtraction, multiplication, division, and exponents are. 
+  <p>This calculator takes a mathematical expression and evaluates it while considering order of operations. Addition, subtraction, multiplication, division, and exponents are supported, but parenthesis are not. 
     <br> For example, an input of "2^3*4-5" would yield 27.
-    <br> The console can be examined after the calculation in order to see the creation of a binary tree to evaluate the expression.</p>
-
-  <input type="text" id="input" value="2^3*4-5">
-
-  <button onclick="myFunction()">Calculate</button>
-
+    <br> The console can be examined after the calculation in order to see the creation of a binary search tree to evaluate the expression.</p>
+  <input type="text" id="bcinput" value="2^3*4-5">
+  <button onclick="basicCalc()">Calculate</button>
   <p id="answer">Answer:</p>
   <p id="ooo">Order of Operations:</p>
+</div>
+
+<div id="Advanced Calculator", class="tabcontent">
+  <h3>Advanced Calculator</h3>
+  <p>This is an advanced calculator</p>
+  <input type="text" id="acinput" value="2^3*4-5">
+  <button onclick="advCalc()">Calculate</button>
+  <p id="acanswer">Answer:</p>
 </div>
 
 <script>
@@ -90,7 +95,6 @@ class Expression {
     this.op = op;
     this.e2 = e2;
   }
-  
   eval () {
   	//document.getElementById("eo").innerHTML = "eval";
     switch (this.op) {
@@ -111,7 +115,6 @@ class Expression {
         throw new error;
     }
   }
-  
   printOut () {
     //console.log("printOut called on exp of type " + this.op);
     if (this.op == "num") {
@@ -156,10 +159,39 @@ function createExpression (input) {
   var LoS = splitOnFirst(input, o);
   return new Expression(createExpression(LoS[0]), o, createExpression(LoS[1]));
 }
+
+function isNumeric(s) {
+  return !s.isNaN() && !s.isNaN(s.parseInt());
+}
+
+function tokenize(input_string) {
+  input_string = input_string.replaceAll(' ','');
+  var output = [];
+  var prev = null;
+  for (let i = 0; i < input_string.length; i++) {
+    /*if (prev == null) {
+      prev = input_string.charAt(i);
+      output.push(prev);
+    } else if (!output.at(-1).isNaN() && !input_string.charAt(i).isNaN()) {
+       prev = prev + input_string.charAt(i);
+        output.at(-1) = prev;
+    }*/
+    output.push(input_string.charAt(i));
+    var ttt = output.at(-1);
+    console.log(i + " " + output.at(-1));
+    console.log(isNumeric(ttt));
+  }
+  return output;
+}
+
+function evaluate(input_string) {
+  return tokenize(input_string);
+}
   
-function myFunction() {
+function basicCalc() {
   console.log("started function");
-  var x = document.getElementById("input").value;
+  var x = document.getElementById("bcinput").value;
+  x = x.replaceAll(' ','');
   console.log("retrieved input of " + x);
   var y = createExpression(x);
   console.log("created Expression of " + y.printOut());
@@ -168,6 +200,12 @@ function myFunction() {
   
   document.getElementById("answer").innerHTML = "Answer: " + z;
   document.getElementById("ooo").innerHTML = "Order of Operations: " + y.printOut();
+}
+
+function advCalc() {
+  var x = document.getElementById("acinput").value;
+  var y = evaluate(x);
+  document.getElementById("acanswer").innerHTML = "Answer: " + y;
 }
 </script>
 </body>
