@@ -57,9 +57,10 @@ body {font-family: Arial;}
 
 <div id="Basic Calculator" class="tabcontent">
   <h3>Basic Calculator</h3>
-  <p>This calculator takes a mathematical expression and evaluates it while considering order of operations. Addition, subtraction, multiplication, division, and exponents are supported, but parenthesis are not. 
+  <p>This calculator takes a mathematical expression and evaluates it while considering order of operations. Addition, subtraction, multiplication, division, and exponents are supported, but parenthesis are not.
+  	<br> Note that negative numbers are not represented well and likely will not work.
     <br> For example, an input of "2^3*4-5" would yield 27.
-    <br> The console can be examined after the calculation in order to see the creation of a binary search tree to evaluate the expression.</p>
+    <br> The console can be examined after the calculation in order to see the creation of a binary tree to evaluate the expression. The binary tree is the reason why negative numbers do not work, a problem which is solved in the advanced calculator.</p>
   <input type="text" id="bcinput" value="2^3*4-5">
   <button onclick="basicCalc()">Calculate</button>
   <p id="answer">Answer:</p>
@@ -160,32 +161,48 @@ function createExpression (input) {
   return new Expression(createExpression(LoS[0]), o, createExpression(LoS[1]));
 }
 
-function isNumeric(s) {
-  return !s.isNaN() && !s.isNaN(s.parseInt());
+function isNumeric(n) {
+  return !isNaN(parseFloat(n)) && isFinite(n);
 }
 
 function tokenize(input_string) {
-  input_string = input_string.replaceAll(' ','');
+  input_string = input_string.replace(' ','');
   var output = [];
   var prev = null;
   for (let i = 0; i < input_string.length; i++) {
-    /*if (prev == null) {
-      prev = input_string.charAt(i);
+  	curr = input_string.charAt(i);
+    // if double numbers or following symbol then - or ( then -
+    if ((isNumeric(prev) && isNumeric(curr)) || (prev == '-' && (output.at(-2) == '(' || !isNumeric(output.at(-2))))) {
+      // append
+      prev = prev + curr;
+      output.length = output.length - 1;
       output.push(prev);
-    } else if (!output.at(-1).isNaN() && !input_string.charAt(i).isNaN()) {
-       prev = prev + input_string.charAt(i);
-        output.at(-1) = prev;
-    }*/
-    output.push(input_string.charAt(i));
-    var ttt = output.at(-1);
-    console.log(i + " " + output.at(-1));
-    console.log(isNumeric(ttt));
+    } else {
+      // split
+      prev = curr;
+      output.push(prev);
+    }
   }
   return output;
 }
 
 function evaluate(input_string) {
-  return tokenize(input_string);
+  tokens = tokenize(input_string);
+  while (tokens.length != 1) {
+  	// P
+    if (tokens.includes('(') && tokens.includes(')')) {
+    	score = 0;
+    	for (const i of tokens) {
+        	if (i == '(') {
+            	score += 1;
+            } else if (i == ')') {
+            	score -= 1;
+            }
+        }
+        return score;
+    }
+  }
+  return tokens.at(0);
 }
   
 function basicCalc() {
@@ -204,9 +221,10 @@ function basicCalc() {
 
 function advCalc() {
   var x = document.getElementById("acinput").value;
-  var y = evaluate(x);
-  document.getElementById("acanswer").innerHTML = "Answer: " + y;
+  var y = tokenize(x);
+  var z = evaluate(y);
+  document.getElementById("acanswer").innerHTML = "Answer: " + z;
 }
 </script>
+
 </body>
-</html>
