@@ -1,7 +1,29 @@
-<!DOCTYPE html>
-<html>
-<body>
+<!doctype html>
 
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>A Basic HTML5 Template</title>
+  <meta name="description" content="A simple HTML5 Template for new projects.">
+  <meta name="author" content="SitePoint">
+
+  <meta property="og:title" content="A Basic HTML5 Template">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.sitepoint.com/a-basic-html5-template/">
+  <meta property="og:description" content="A simple HTML5 Template for new projects.">
+  <meta property="og:image" content="image.png">
+
+  <link rel="icon" href="/favicon.ico">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+  <link rel="stylesheet" href="css/styles.css?v=1.0">
+
+</head>
+
+<body>
 <script>
 function openTab(evt, tabName) {
   var i, tabcontent, tablinks;
@@ -251,6 +273,8 @@ body {font-family: Arial;}
 
 <h2>Spencer Dee's Project Page</h2>
 <p>Select a project to begin</p>
+<button ontouchstart="advCalc()">Touch me!</button>
+<button onclick="advCalc()">Click me!</button>
 
 <div class="tab">
   <button class="tablinks" onclick="openTab(event, 'Basic Calculator')">Basic Calculator</button>
@@ -276,7 +300,7 @@ body {font-family: Arial;}
     <br>The list of tokens is then recursively evaluated until an error is encountered (improper use of parenthesis or character) or the expression is simplified to one term.
     <br>In the example, 2^(3*4)-5 should yield 4091.</p>
   <input type="text" id="acinput" value="2^(3*4)-5">
-  <button ontouchstart="advCalc()">Calculate</button>
+  <button ontouchstart="advCalc()" onclick="advCalc()">Calculate</button>
   <p id="acanswer">Answer:</p>
 </div>
 
