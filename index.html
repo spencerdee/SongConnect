@@ -109,14 +109,14 @@ function tokenize(input_string) {
   var output = [];
   var prev = null;
   for (let i = 0; i < input_string.length; i++) {
-  	curr = input_string.at(i);
+  	curr = input_string[i];
     if (curr.toUpperCase() != curr.toLowerCase() || curr == '$' || curr == '_') {
     	return 'ERROR: "' + curr + '" is not a number or operator';
     } else if (prev != null && prev.includes('.') && curr == '.') {
     	return 'ERROR: "' + prev + curr + '" is not a valid input';
     }
     // combine multi-digit numbers, negative numbers, and decimals
-    if ((isNumeric(prev) && isNumeric(curr)) || (prev == '-' && (output.at(-2) == '(' || (!isNumeric(output.at(-2))) && output.at(-2) != ')')) || (isNumeric(prev) && curr == '.')) {
+    if ((isNumeric(prev) && isNumeric(curr)) || (prev == '-' && (output[-2] == '(' || (!isNumeric(output[-2])) && output[-2] == ')')) || (isNumeric(prev) && curr == '.')) {
       // append
       prev = prev + curr;
       output.length = output.length - 1;
@@ -133,20 +133,20 @@ function tokenize(input_string) {
 function evaluate(tokens) {
   
   if (tokens.length <= 1) {
-  	return tokens.at(0);
+  	return tokens[0];
   }
   
   if (tokens.includes('(') && tokens.includes(')')) {
     score = 0;
     prev = '';
     for (let i = 0; i < tokens.length; i++) {
-      curr = tokens.at(i);
+      curr = tokens[i];
       if (curr == '(') {
       	prev = i;
         score += 1;
       } else if (curr == ')') {
         score -= 1;
-        if (tokens.at(prev) == '(') {
+        if (tokens[prev] == '(') {
           inner = tokens.slice(prev + 1, i);
           tokens.splice(prev, i - prev + 1, evaluate(inner));
         } else {
@@ -159,45 +159,45 @@ function evaluate(tokens) {
     } 
   } else if (tokens.includes("^")) {
   	for (let i = 0; i < tokens.length; i++) {
-    	if (tokens.at(i) == "^") {
-        	lower = tokens.at(i - 1);
-            upper = tokens.at(i + 1);
+    	if (tokens[i] == "^") {
+        	lower = tokens[i-1];
+            upper = tokens[i+1];
             tokens.splice(i - 1, 3, Math.pow(parseFloat(lower), parseFloat(upper)).toString());
             break;
         }
     }
   } else if (tokens.includes("*")) {
   	for (let i = 0; i < tokens.length; i++) {
-    	if (tokens.at(i) == "*") {
-        	lower = tokens.at(i - 1);
-            upper = tokens.at(i + 1);
+    	if (tokens[i] == "*") {
+        	lower = tokens[i-1];
+            upper = tokens[i+1];
             tokens.splice(i - 1, 3, (parseFloat(lower) * parseFloat(upper)).toString());
             break;
         }
     }
   } else if (tokens.includes("/")) {
     for (let i = 0; i < tokens.length; i++) {
-    	if (tokens.at(i) == "/") {
-        	numer = tokens.at(i - 1);
-            denom = tokens.at(i + 1);
+    	if (tokens[i] == "/") {
+        	numer = tokens[i-1];
+            denom = tokens[i+1];
             tokens.splice(i - 1, 3, (parseFloat(numer) / parseFloat(denom)).toString());
             break;
         }
     }
   } else if (tokens.includes("-")) {
     for (let i = 0; i < tokens.length; i++) {
-    	if (tokens.at(i) == "-") {
-        	lower = tokens.at(i - 1);
-            upper = tokens.at(i + 1);
+    	if (tokens[i] == "-") {
+        	lower = tokens[i-1];
+            upper = tokens[i+1];
             tokens.splice(i - 1, 3, (parseFloat(lower) - parseFloat(upper)).toString());
             break;
         }
     }
   } else if (tokens.includes("+")) {
     for (let i = 0; i < tokens.length; i++) {
-    	if (tokens.at(i) == "+") {
-        	lower = tokens.at(i - 1);
-            upper = tokens.at(i + 1);
+    	if (tokens[i] == "+") {
+        	lower = tokens[i-1];
+            upper = tokens[i+1];
             tokens.splice(i - 1, 3, (parseFloat(lower) + parseFloat(upper)).toString());
             break;
         }
@@ -223,10 +223,6 @@ function advCalc() {
   var y = tokenize(x);
   var z = evaluate(y, 1);
   document.getElementById("acanswer").innerHTML = "Answer: " + z;
-}
-
-function myFunction() {
-  document.getElementById("demo").innerHTML = "Hello World";
 }
 </script>
 
@@ -277,9 +273,6 @@ body {font-family: Arial;}
 
 <h2>Spencer Dee's Project Page</h2>
 <p>Select a project to begin</p>
-<p id="demo"></p>
-<button ontouchstart="myFunction()">Touch me!</button>
-<button onclick="myFunction()">Click me!</button>
 
 <div class="tab">
   <button class="tablinks" onclick="openTab(event, 'Basic Calculator')">Basic Calculator</button>
