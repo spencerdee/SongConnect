@@ -39,17 +39,14 @@ class Expression {
       case "^":
         return Math.pow(this.e1.eval(), this.e2.eval());
       default:
-        console.log("Error: " + this.op + " is not a valid operation");
+        console.log("ERROR: " + this.op + " is not a valid operation");
         throw new error;
     }
   }
   printOut () {
-    //console.log("printOut called on exp of type " + this.op);
     if (this.op == "num") {
-      //console.log("printOut: num is " + this.e1.toString());
       return this.e1.toString();
     } else {
-      //console.log("printOut: exp is " + this.e1.printOut() + this.op + this.e2.printOut());
   	  return "(" + this.e1.printOut() + this.op + this.e2.printOut() + ")";
     }
   }
@@ -61,27 +58,20 @@ function splitOnFirst (str, sep) {
 }
 
 function createExpression (input) {
-  console.log("create expression called with input of " + input);
   if (!isNaN(input)) {
-    console.log("num input of <" + input + ">");
     return new Expression(parseInt(input), "num", parseInt(input));
   } else if (input.includes("-")) {
-    console.log("found - in input of " + input);
     var o = "-";
   } else if (input.includes("+")) {
-    console.log("found + in input of " + input);
     var o = "+";
   } else if (input.includes("/")) {
-    console.log("found / in input of " + input);
     var o = "/";
   } else if (input.includes("*")) {
-    console.log("found * in input of " + input);
     var o = "*";
   } else if (input.includes("^")) {
-    console.log("found ^ in input of " + input);
     var o = "^";
   } else {
-    console.log("SDERROR: nothing found in input of " + input);
+    console.log("ERROR: nothing found in input of " + input);
     throw new error;
   }
   var LoS = splitOnFirst(input, o);
@@ -119,7 +109,6 @@ function tokenize(input_string) {
 }
 
 function evaluate(tokens) {
-  console.log(tokens);
   
   if (tokens.length <= 1) {
   	return tokens.at(0);
@@ -142,7 +131,6 @@ function evaluate(tokens) {
           prev = i;
         }
       }
-      console.log(score);
       if (score < 0) {
       	return "ERROR: Incorrect use of parenthesis.";
       }
@@ -199,14 +187,10 @@ function evaluate(tokens) {
 }
   
 function basicCalc() {
-  console.log("started function");
   var x = document.getElementById("bcinput").value;
   x = x.replaceAll(' ','');
-  console.log("retrieved input of " + x);
   var y = createExpression(x);
-  console.log("created Expression of " + y.printOut());
   var z = y.eval();
-  console.log("answer found is " + z);
   
   document.getElementById("answer").innerHTML = "Answer: " + z;
   document.getElementById("ooo").innerHTML = "Order of Operations: " + y.printOut();
